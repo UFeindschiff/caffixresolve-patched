@@ -1,4 +1,4 @@
-module github.com/UFeindschiff/caffixresolve-patched
+module github.com/caffix/resolve
 
 go 1.19
 

@@ -113,7 +113,7 @@ func (c *connections) responses(conn *net.UDPConn) {
 			m := new(dns.Msg)
 
 			if err := m.Unpack(b[:n]); err == nil && len(m.Question) > 0 {
-				fmt.Println(m.Answer)
+				fmt.Println(m)
 				c.resps.Append(&resp{
 					Msg:  m,
 					Addr: addr,

@@ -9,6 +9,7 @@ import (
 	"net"
 	"sync"
 	"time"
+	"fmt"
 
 	"github.com/caffix/queue"
 	"github.com/miekg/dns"
@@ -113,6 +114,7 @@ func (c *connections) responses(conn *net.UDPConn) {
 			m := new(dns.Msg)
 
 			if err := m.Unpack(b[:n]); err == nil && len(m.Question) > 0 {
+				fmt.Println(m.Answer)
 				c.resps.Append(&resp{
 					Msg:  m,
 					Addr: addr,

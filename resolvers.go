@@ -13,6 +13,7 @@ import (
 	"runtime"
 	"sync"
 	"time"
+	"fmt"
 
 	"github.com/caffix/queue"
 	"github.com/miekg/dns"
@@ -228,6 +229,13 @@ func (r *Resolvers) Stop() {
 // Query queues the provided DNS message and returns the response on the provided channel.
 func (r *Resolvers) Query(ctx context.Context, msg *dns.Msg, ch chan *dns.Msg) {
 	if msg == nil {
+		ch <- msg
+		return
+	}
+	
+	if !checkForDomainDNSOkSuffix(sprintName(msg.Question[0].Name)) {
+		fmt.Println(sprintName(msg.Question[0].Name) + " DNS is blacklisted. Skipping...")
+		msg.Rcode = RcodeNoResponse
 		ch <- msg
 		return
 	}

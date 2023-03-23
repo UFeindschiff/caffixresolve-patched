@@ -9,7 +9,6 @@ import (
 	"net"
 	"sync"
 	"time"
-	"fmt"
 
 	"github.com/caffix/queue"
 	"github.com/miekg/dns"

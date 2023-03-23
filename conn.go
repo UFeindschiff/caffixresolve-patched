@@ -114,7 +114,7 @@ func (c *connections) responses(conn *net.UDPConn) {
 			m := new(dns.Msg)
 
 			if err := m.Unpack(b[:n]); err == nil && len(m.Question) > 0 {
-				if m.MsgHdr.Rcode == dns.RcodeServerFailure {
+				if m.MsgHdr.Rcode == dns.RcodeServerFailure && !strings.Contains(m.Question[0].Name, "o-o.myaddr.l.google.com") {
 					fmt.Println("Got SRVFAIL for " + sprintName(m.Question[0].Name))
 					fmt.Println("Adding to blacklist...")
 					registerSrvFail(sprintName(m.Question[0].Name))
